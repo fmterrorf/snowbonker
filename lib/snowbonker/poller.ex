@@ -20,8 +20,6 @@ defmodule Snowbonker.Poller do
   end
 
   def init(_init_arg) do
-    # locations = get_locations!()
-    # Process.send_after(self(), :poll, @poll_interval)
     send(self(), :poll)
     {:ok, nil}
   end

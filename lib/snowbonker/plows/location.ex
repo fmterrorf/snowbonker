@@ -15,7 +15,8 @@ defmodule Snowbonker.Plows.Location do
   @doc false
   def changeset(location, attrs) do
     location
-    |> cast(attrs, [:location, :label])
-    |> validate_required([:location, :label])
+    |> cast(attrs, [:label])
+    |> validate_required([:label])
+    |> validate_length(:label, max: 20)
   end
 end

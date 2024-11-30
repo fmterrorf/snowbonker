@@ -1,0 +1,25 @@
+<.header>
+  Locations
+</.header>
+
+<.table
+  id="locations"
+  rows={@streams.locations}
+>
+  <:col :let={{_id, location}} label="id"><%= location.id %></:col>
+  <:col :let={{_id, location}} label="label"><%= location.label || "No name" %> </:col>
+  <:action :let={{_id, location}}>
+    <.link patch={~p"/locations/#{location}/edit"}>Edit</.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:edit]} id="location-modal" show on_cancel={JS.patch(~p"/locations")}>
+  <.live_component
+    module={SnowbonkerWeb.LocationLive.FormComponent}
+    id={@location.id || :new}
+    title={@page_title}
+    action={@live_action}
+    location={@location}
+    patch={~p"/locations"}
+  />
+</.modal>

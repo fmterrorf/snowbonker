@@ -9,7 +9,7 @@ defmodule SnowbonkerWeb.SnowcrewLive.Index do
       PubSub.subscribe(Snowbonker.PubSub, "location_update")
     end
 
-    {:ok, socket}
+    {:ok, socket, layout: {SnowbonkerWeb.Layouts, :map}}
   end
 
   @impl true
