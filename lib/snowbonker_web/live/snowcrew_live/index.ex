@@ -1,5 +1,5 @@
 defmodule SnowbonkerWeb.SnowcrewLive.Index do
-  alias Snowbonker.Poller
+  alias Snowbonker.Plows
   alias Phoenix.PubSub
   use SnowbonkerWeb, :live_view
 
@@ -14,7 +14,9 @@ defmodule SnowbonkerWeb.SnowcrewLive.Index do
 
   @impl true
   def handle_info(:location_update, socket) do
-    {:noreply, socket |> push_event("locations", %{locations: Poller.locations(Poller)})}
+    {:noreply,
+     socket
+     |> push_event("locations", %{locations: Plows.list_locations()})}
   end
 
   @impl true
@@ -25,7 +27,7 @@ defmodule SnowbonkerWeb.SnowcrewLive.Index do
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Plows")
-    |> push_event("locations", %{locations: Poller.locations(Poller)})
+    |> push_event("locations", %{locations: Plows.list_locations()})
   end
 
   @impl true

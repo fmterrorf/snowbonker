@@ -28,7 +28,7 @@ if config_env() == :prod do
       For example: /etc/snowbonker/snowbonker.db
       """
 
-  config :snowbonker, CuriousDoggo.Repo,
+  config :snowbonker, Snowbonker.Repo,
     database: database_path,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
 

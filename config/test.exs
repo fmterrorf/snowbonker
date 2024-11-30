@@ -3,8 +3,7 @@ import Config
 config :snowbonker, Snowbonker.Repo,
   database: Path.expand("../snowbonker_dev.db", __DIR__),
   pool_size: 5,
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true
+  pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

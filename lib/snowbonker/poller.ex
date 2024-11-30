@@ -2,6 +2,7 @@ defmodule Snowbonker.Poller do
   @moduledoc """
   Polls for the location of snow plows
   """
+  alias Snowbonker.Plows
   alias Phoenix.PubSub
 
   @plow_names %{
@@ -18,26 +19,19 @@ defmodule Snowbonker.Poller do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
 
-  def locations(server) do
-    GenServer.call(server, :locations)
-  end
-
-  @spec init(any()) :: {:ok, %{locations: list()}}
   def init(_init_arg) do
-    locations = get_locations!()
-    Process.send_after(self(), :poll, @poll_interval)
-    {:ok, %{locations: locations}}
+    # locations = get_locations!()
+    # Process.send_after(self(), :poll, @poll_interval)
+    send(self(), :poll)
+    {:ok, nil}
   end
 
   def handle_info(:poll, state) do
-    locations = get_locations!()
+    get_locations!()
+    |> Plows.batch_insert()
     Process.send_after(self(), :poll, @poll_interval)
     PubSub.broadcast!(Snowbonker.PubSub, "location_update", :location_update)
-    {:noreply, %{state | locations: locations}}
-  end
-
-  def handle_call(:locations, _from, state) do
-    {:reply, state.locations, state}
+    {:noreply, state}
   end
 
   @service_vehicle_endpoint "https://hotline.gov.sk.ca/map/mapIcons/ServiceVehicles"
