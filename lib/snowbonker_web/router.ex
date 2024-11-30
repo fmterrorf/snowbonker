@@ -17,11 +17,6 @@ defmodule SnowbonkerWeb.Router do
   scope "/", SnowbonkerWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", SnowcrewLive.Index, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", SnowbonkerWeb do
-  #   pipe_through :api
-  # end
 end
