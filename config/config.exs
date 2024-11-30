@@ -8,6 +8,7 @@
 import Config
 
 config :snowbonker,
+  ecto_repos: [Snowbonker.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint

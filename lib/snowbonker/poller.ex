@@ -12,7 +12,7 @@ defmodule Snowbonker.Poller do
 
   use GenServer
 
-  @poll_interval :timer.minutes(10)
+  @poll_interval :timer.minutes(20)
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)

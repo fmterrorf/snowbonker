@@ -9,6 +9,10 @@ defmodule Snowbonker.Application do
   def start(_type, _args) do
     children = [
       SnowbonkerWeb.Telemetry,
+      Snowbonker.Repo,
+      {Ecto.Migrator,
+       repos: Application.fetch_env!(:snowbonker, :ecto_repos),
+        skip: skip_migrations?()},
       {DNSCluster, query: Application.get_env(:snowbonker, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Snowbonker.PubSub},
       Snowbonker.Poller,
@@ -23,5 +27,9 @@ defmodule Snowbonker.Application do
   def config_change(changed, _new, removed) do
     SnowbonkerWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp skip_migrations?() do
+    System.get_env("RELEASE_NAME") != nil
   end
 end

@@ -2,7 +2,13 @@ import Config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
-#
+
+config :snowbonker, Snowbonker.Repo,
+  database: Path.expand("../snowbonker_dev.db", __DIR__),
+  pool_size: 5,
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true
+
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.

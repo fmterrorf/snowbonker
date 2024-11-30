@@ -10,7 +10,7 @@ export const Map = {
 
 
     const geoJSONLayer = L.geoJSON({ "type": "FeatureCollection", "features": [] }, {
-      pointToLayer: function(geoJSONPoint) {
+      pointToLayer: function (geoJSONPoint) {
         const plowIcon = L.icon({
           iconUrl: 'images/plow.svg',
           iconSize: [38, 38],
@@ -20,9 +20,13 @@ export const Map = {
           icon: plowIcon,
           rotationAngle: Math.floor(Math.random() * 360)
         });
-        marker.bindTooltip(geoJSONPoint.properties.label, {
+
+        const properties = geoJSONPoint.properties;
+        const hasLabel = properties.label != null;
+        const displayLabel = properties.label || `No name. (id: ${properties.id})`;
+        marker.bindTooltip(displayLabel, {
           direction: 'right',
-          // permanent: true,
+          permanent: hasLabel,
           className: 'point'
         });
 
@@ -34,7 +38,7 @@ export const Map = {
       const features = data.locations.map(item => {
         return {
           "type": "Feature",
-          "properties": { "label": item.label || `No name. (id: ${item.id})` },
+          "properties": { "label": item.label, "id": item.id },
           "geometry": {
             "type": "Point",
             "coordinates": item.location

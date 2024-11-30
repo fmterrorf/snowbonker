@@ -30,6 +30,6 @@ defmodule SnowbonkerWeb.SnowcrewLive.Index do
 
   @impl true
   def render(assigns) do
-    ~H|<div id="map" phx-hook="Map"></div>|
+    ~H|<div id="map" phx-update="ignore" phx-hook="Map"></div>|
   end
 end
