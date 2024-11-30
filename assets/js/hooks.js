@@ -11,7 +11,6 @@ export const Map = {
 
     const geoJSONLayer = L.geoJSON({ "type": "FeatureCollection", "features": [] }, {
       pointToLayer: function(geoJSONPoint) {
-
         const plowIcon = L.icon({
           iconUrl: 'images/plow.svg',
           iconSize: [38, 38],
@@ -35,7 +34,7 @@ export const Map = {
       const features = data.locations.map(item => {
         return {
           "type": "Feature",
-          "properties": { "label": item.label },
+          "properties": { "label": item.label || `No name. (id: ${item.id})` },
           "geometry": {
             "type": "Point",
             "coordinates": item.location

@@ -47,7 +47,7 @@ defmodule Snowbonker.Poller do
       %{
         id: item["itemId"],
         location: item["location"],
-        label: @plow_names[item["itemId"]] || "No Name"
+        label: @plow_names[item["itemId"]]
       }
     end)
   end
