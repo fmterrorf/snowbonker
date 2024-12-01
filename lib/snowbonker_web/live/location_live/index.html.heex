@@ -5,12 +5,10 @@
 <.table
   id="locations"
   rows={@streams.locations}
+  row_click={fn {_id, location} -> JS.patch(~p"/locations/#{location}/edit") end}
 >
   <:col :let={{_id, location}} label="id"><%= location.id %></:col>
   <:col :let={{_id, location}} label="label"><%= location.label || "No name" %> </:col>
-  <:action :let={{_id, location}}>
-    <.link patch={~p"/locations/#{location}/edit"}>Edit</.link>
-  </:action>
 </.table>
 
 <.modal :if={@live_action in [:edit]} id="location-modal" show on_cancel={JS.patch(~p"/locations")}>
