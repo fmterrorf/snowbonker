@@ -21,6 +21,7 @@ defmodule Snowbonker.Poller do
   def handle_info(:poll, state) do
     get_locations!()
     |> Plows.batch_insert()
+
     Process.send_after(self(), :poll, @poll_interval)
     PubSub.broadcast!(Snowbonker.PubSub, "location_update", :location_update)
     {:noreply, state}
@@ -30,10 +31,16 @@ defmodule Snowbonker.Poller do
   def get_locations!() do
     Req.get!(@service_vehicle_endpoint).body["item2"]
     |> Enum.map(fn item ->
+      rotation =
+        case Integer.parse(item["icon"]["json"]) do
+          {integer, _remainder} -> integer
+          _error -> 0
+        end
+
       %{
         id: item["itemId"],
         location: item["location"],
-        label: nil
+        rotation: rotation
       }
     end)
   end

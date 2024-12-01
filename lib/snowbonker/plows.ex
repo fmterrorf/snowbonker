@@ -9,7 +9,8 @@ defmodule Snowbonker.Plows do
   alias Snowbonker.Plows.Location
 
   def list_locations do
-    Repo.all(Location)
+    from(l in Location, where: l.hidden == false)
+    |> Repo.all()
   end
 
   def get_location!(id), do: Repo.get!(Location, id)
@@ -36,10 +37,11 @@ defmodule Snowbonker.Plows do
 
   def batch_insert(locations) do
     now = date_now_sec()
+
     inserts =
       Enum.map(locations, fn item ->
         Map.merge(
-          %{inserted_at: now, updated_at: now},
+          %{inserted_at: now, updated_at: now, hidden: false},
           Map.take(item, [:id, :location])
         )
       end)
@@ -47,6 +49,11 @@ defmodule Snowbonker.Plows do
     Snowbonker.Repo.insert_all(Location, inserts,
       on_conflict: {:replace_all_except, [:id, :inserted_at, :label]}
     )
+
+    ids = Enum.map(locations, & &1.id)
+
+    from(l in Location, where: l.id not in ^ids, update: [set: [hidden: true]])
+    |> Snowbonker.Repo.update_all([])
   end
 
   defp date_now_sec() do

@@ -16,12 +16,12 @@ export const Map = {
           iconSize: [60, 60],
           iconAnchor: [22, 10]
         });
+        const properties = geoJSONPoint.properties;
         const marker = L.marker(geoJSONPoint.geometry.coordinates, {
           icon: plowIcon,
-          rotationAngle: Math.floor(Math.random() * 180)
+          rotationAngle: properties.rotation
         });
 
-        const properties = geoJSONPoint.properties;
         const hasLabel = properties.label != null;
         const displayLabel = properties.label || `No name. (id: ${properties.id})`;
         marker.bindTooltip(displayLabel, {
@@ -38,7 +38,7 @@ export const Map = {
       const features = data.locations.map(item => {
         return {
           "type": "Feature",
-          "properties": { "label": item.label, "id": item.id },
+          "properties": { "label": item.label, "id": item.id, "rotation": item.rotation },
           "geometry": {
             "type": "Point",
             "coordinates": item.location

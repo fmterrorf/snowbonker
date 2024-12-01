@@ -8,6 +8,8 @@ defmodule Snowbonker.Plows.Location do
   schema "locations" do
     field(:location, {:array, :float})
     field(:label, :string)
+    field(:hidden, :boolean)
+    field(:rotation, :integer)
 
     timestamps(type: :utc_datetime)
   end
