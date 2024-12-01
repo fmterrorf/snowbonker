@@ -13,12 +13,12 @@ export const Map = {
       pointToLayer: function (geoJSONPoint) {
         const plowIcon = L.icon({
           iconUrl: 'images/plow.svg',
-          iconSize: [38, 38],
+          iconSize: [60, 60],
           iconAnchor: [22, 10]
         });
         const marker = L.marker(geoJSONPoint.geometry.coordinates, {
           icon: plowIcon,
-          rotationAngle: Math.floor(Math.random() * 360)
+          rotationAngle: Math.floor(Math.random() * 180)
         });
 
         const properties = geoJSONPoint.properties;

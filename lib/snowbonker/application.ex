@@ -11,7 +11,7 @@ defmodule Snowbonker.Application do
       SnowbonkerWeb.Telemetry,
       Snowbonker.Repo,
       {Ecto.Migrator,
-       repos: Application.fetch_env!(:snowbonker, :ecto_repos), skip: skip_migrations?()},
+       repos: Application.fetch_env!(:snowbonker, :ecto_repos), skip: false},
       {DNSCluster, query: Application.get_env(:snowbonker, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Snowbonker.PubSub},
       Snowbonker.Poller,
@@ -28,7 +28,7 @@ defmodule Snowbonker.Application do
     :ok
   end
 
-  defp skip_migrations?() do
-    System.get_env("RELEASE_NAME") != nil
-  end
+  # defp skip_migrations?() do
+  #   System.get_env("RELEASE_NAME") != nil
+  # end
 end

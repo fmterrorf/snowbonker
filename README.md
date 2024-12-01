@@ -1,5 +1,5 @@
 # Snowbonker
 
-Help me name these snow plows https://github.com/fmterrorf/snowbonker/blob/main/lib/snowbonker/poller.ex#L7-L11
+Uses highway hotline snow plow data to mark where the plows are 
 
-Create an issue with the ID and Name
+Head over to https://snowbonker.fly.dev/ to check it out

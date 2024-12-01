@@ -5,12 +5,6 @@ defmodule Snowbonker.Poller do
   alias Snowbonker.Plows
   alias Phoenix.PubSub
 
-  @plow_names %{
-    "23224" => "Scoop dog",
-    "23225" => "Sled Zepplin",
-    "23226" => "Snobi One Kenobi"
-  }
-
   use GenServer
 
   @poll_interval :timer.minutes(20)
@@ -39,7 +33,7 @@ defmodule Snowbonker.Poller do
       %{
         id: item["itemId"],
         location: item["location"],
-        label: @plow_names[item["itemId"]]
+        label: nil
       }
     end)
   end
