@@ -7,7 +7,6 @@ defmodule Snowbonker.Plows.Location do
   @foreign_key_type :binary_id
   schema "locations" do
     field(:location, {:array, :float})
-    field(:label, :string)
     field(:hidden, :boolean)
     field(:rotation, :integer)
 

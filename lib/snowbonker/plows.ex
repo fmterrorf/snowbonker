@@ -42,12 +42,12 @@ defmodule Snowbonker.Plows do
       Enum.map(locations, fn item ->
         Map.merge(
           %{inserted_at: now, updated_at: now, hidden: false},
-          Map.take(item, [:id, :location])
+          Map.take(item, [:id, :location, :rotation])
         )
       end)
 
     Snowbonker.Repo.insert_all(Location, inserts,
-      on_conflict: {:replace_all_except, [:id, :inserted_at, :label]}
+      on_conflict: {:replace_all_except, [:id, :inserted_at]}
     )
 
     ids = Enum.map(locations, & &1.id)

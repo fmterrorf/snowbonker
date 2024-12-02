@@ -16,6 +16,11 @@ body {
     height: 100vh;
 }
 
+#map_tool_tip { 
+    position: fixed;
+    z-index: 500;
+}
+
 .leaflet-tooltip.point {
     /* background-color: transparent; */
     /* border: 0px; */
